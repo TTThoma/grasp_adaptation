@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- These arguments load the electric grippers, for example left_electric_gripper:=true -->
+  <arg name="left_electric_gripper" default="true"/>
+  <arg name="right_electric_gripper" default="true"/>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <!-- This xacro will pull in baxter_base.urdf.xacro, left_end_effector.urdf.xacro,
+                                           and right_end_effector.urdf.xacro
+       Note: if you set this to false, you MUST have set the robot_description prior
+             to launching baxter_world -->
+  <arg name="load_robot_description" default="true"/>
+  <param if="$(arg load_robot_description)" name="robot_description"
+      command="$(find xacro)/xacro --inorder $(find baxter_description)/urdf/baxter.urdf.xacro gazebo:=true
+      left_electric_gripper:=$(arg left_electric_gripper) right_electric_gripper:=$(arg right_electric_gripper)"/>
+
+  <param name="realsense_description" command="$(find xacro)/xacro '$(find realsense_gazebo_plugin)/urdf/rs200_simulation.xacro'"/>
+  <param name="cafe_table_description" textfile="/home/dof6/.gazebo/models/cafe_table/model.sdf"/>
+  <param name="t_shape_description" textfile="/home/dof6/.gazebo/models/t_shape/model.sdf"/>
+  <param name="l_shape_description" textfile="/home/dof6/.gazebo/models/l_shape/model.sdf"/>
+  <param name="u_shape_description" textfile="/home/dof6/.gazebo/models/u_shape/model.sdf"/>
+  <param name="beer_description" textfile="/home/dof6/.gazebo/models/beer/model.sdf"/>
+  <param name="obj_1_description" textfile="/home/dof6/.gazebo/models/obj_1/model.sdf"/>
+  <param name="obj_10_description" textfile="/home/dof6/.gazebo/models/obj_10/model.sdf"/>
+  <param name="obj_15_description" textfile="/home/dof6/.gazebo/models/obj_15/model.sdf"/>
+  <param name="obj_20_description" textfile="/home/dof6/.gazebo/models/obj_20/model.sdf"/>
+  <param name="obj_38_description" textfile="/home/dof6/.gazebo/models/obj_38/model.sdf"/>
+  <param name="poly_basket_description" textfile="/home/dof6/.gazebo/models/poly_basket/model.sdf"/>
+  <param name="basket_description" textfile="/home/dof6/.gazebo/models/basket/model.sdf"/>  <param name="FizzyTablets_800_tex_description" textfile="/home/dof6/.gazebo/models/FizzyTablets_800_tex/model.sdf"/>
+  <param name="CokePlasticLarge_800_tex_description" textfile="/home/dof6/.gazebo/models/CokePlasticLarge_800_tex/model.sdf"/>
+  <param name="WhippedCream_800_tex_description" textfile="/home/dof6/.gazebo/models/WhippedCream_800_tex/model.sdf"/>
+  <param name="PowderedSugarMill_800_tex_description" textfile="/home/dof6/.gazebo/models/PowderedSugarMill_800_tex/model.sdf"/>
+  <param name="FizzyTabletsCalcium_800_tex_description" textfile="/home/dof6/.gazebo/models/FizzyTabletsCalcium_800_tex/model.sdf"/>
+  <param name="YellowSaltCylinderSmall_800_tex_description" textfile="/home/dof6/.gazebo/models/YellowSaltCylinderSmall_800_tex/model.sdf"/>
+  <param name="Sweetener_800_tex_description" textfile="/home/dof6/.gazebo/models/Sweetener_800_tex/model.sdf"/>
+  <param name="Marjoram_800_tex_description" textfile="/home/dof6/.gazebo/models/Marjoram_800_tex/model.sdf"/>
+  <param name="BathDetergent_800_tex_description" textfile="/home/dof6/.gazebo/models/BathDetergent_800_tex/model.sdf"/>
+  <param name="GreenSaltCylinder_800_tex_description" textfile="/home/dof6/.gazebo/models/GreenSaltCylinder_800_tex/model.sdf"/>
+  <param name="CokePlasticSmall_800_tex_description" textfile="/home/dof6/.gazebo/models/CokePlasticSmall_800_tex/model.sdf"/>
+  <param name="HygieneSpray_800_tex_description" textfile="/home/dof6/.gazebo/models/HygieneSpray_800_tex/model.sdf"/>
+  <param name="YellowSaltCylinder_800_tex_description" textfile="/home/dof6/.gazebo/models/YellowSaltCylinder_800_tex/model.sdf"/>
+  <param name="CokePlasticSmallGrasp_800_tex_description" textfile="/home/dof6/.gazebo/models/CokePlasticSmallGrasp_800_tex/model.sdf"/>
+  <param name="ToyCarYelloq_800_tex_description" textfile="/home/dof6/.gazebo/models/ToyCarYelloq_800_tex/model.sdf"/>
+  <param name="Sprudelflasche_800_tex_description" textfile="/home/dof6/.gazebo/models/Sprudelflasche_800_tex/model.sdf"/>
+  <param name="Paprika_800_tex_description" textfile="/home/dof6/.gazebo/models/Paprika_800_tex/model.sdf"/>
+  <param name="WhippedCream2_800_tex_description" textfile="/home/dof6/.gazebo/models/WhippedCream2_800_tex/model.sdf"/>
+  <param name="Curry_800_tex_description" textfile="/home/dof6/.gazebo/models/Curry_800_tex/model.sdf"/>
+  <param name="CoffeeCookies_800_tex_description" textfile="/home/dof6/.gazebo/models/CoffeeCookies_800_tex/model.sdf"/>
+  <param name="MelforBottle_800_tex_description" textfile="/home/dof6/.gazebo/models/MelforBottle_800_tex/model.sdf"/>
+
+  <!-- We resume the logic in empty_world.launch, changing the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find baxter_gazebo)/worlds/baxter.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- Load the software version into the ROS Parameter Server -->
+  <param name="rethink/software_version" value="1.2.0" />
+
+  <!-- Publish a static transform between the world and the base of the robot -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_world" args="0 0 0 0 0 0 1 world base" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-param robot_description -urdf -z 0.93 -model baxter
+	      -J baxter::right_s0 -0.272659
+	      -J baxter::right_s1 1.04701
+	      -J baxter::right_e0 -0.00123203
+	      -J baxter::right_e1 0.49262
+	      -J baxter::right_w0 -0.0806423
+	      -J baxter::right_w1 -0.0620532
+	      -J baxter::right_w2 0.0265941
+	      -J baxter::left_s0 0.192483
+	      -J baxter::left_s1 1.047
+	      -J baxter::left_e0 0.000806359
+	      -J baxter::left_e1 0.491094
+	      -J baxter::left_w0 -0.178079
+	      -J baxter::left_w1 -0.0610333
+	      -J baxter::left_w2 -0.0124707" />
+
+  <!-- ros_control baxter launch file -->
+  <include file="$(find baxter_sim_hardware)/launch/baxter_sdk_control.launch">
+      <arg name="right_electric_gripper" value="$(arg right_electric_gripper)"/>
+      <arg name="left_electric_gripper" value="$(arg left_electric_gripper)"/>
+      <arg name="gui" value="$(arg gui)" />
+  </include>
+
+</launch>
