@@ -16,7 +16,7 @@ import tf.transformations
 # import baxter_interface
 
 import numpy as np
-from utils import *
+from myutil import *
 from baxter_pickplace_interface import *
 from matplotlib import pyplot as plt
 
