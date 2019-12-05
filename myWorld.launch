@@ -17,7 +17,7 @@
                                            and right_end_effector.urdf.xacro
        Note: if you set this to false, you MUST have set the robot_description prior
              to launching baxter_world -->
-  <!-- <arg name="load_robot_description" default="true"/> -->
+  <arg name="load_robot_description" default="true"/>
 
   <!-- <param name="realsense_description" command="$(find xacro)/xacro '$(find realsense_gazebo_plugin)/urdf/rs200_simulation.xacro'"/>
   <param name="cafe_table_description" textfile="/home/dof6/.gazebo/models/cafe_table/model.sdf"/>
