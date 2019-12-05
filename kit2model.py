@@ -3,19 +3,20 @@ import trimesh
 import numpy as np
 from matplotlib import pyplot as plt
 
-path = os.getcwd() + 'kit/'
+path = os.getcwd() + '/kit/'
 file_list = os.listdir(path)
 name_list = []
 for file_name in file_list:
     name = file_name.replace(".obj","")
-    trimesh_data = trimesh.load('/home/dof6/Downloads/kit/'+name+'.obj')
+    trimesh_data = trimesh.load(path + name + '.obj')
     if np.min(trimesh_data.bounds[1] - trimesh_data.bounds[0]) > 0.03 and np.max(trimesh_data.bounds[1] - trimesh_data.bounds[0]) > 0.10:
         name_list.append(name)
+        newpath = os.getcwd() + '/.gazebo/models/'
         try:
-            os.mkdir('/home/dof6/.gazebo/models/'+name)
-            os.mkdir('/home/dof6/.gazebo/models/'+name+'/meshes')
+            os.mkdir(newpath + name)
+            os.mkdir(newpath + name + '/meshes')
         except:
-            print("Folder already exsit")
+            print(name + " already exsit")
 
         unit = 1.0
         if unit**3*trimesh_data.mass < 1e-5:
@@ -113,10 +114,10 @@ for file_name in file_list:
         config_content += "  </description>\n"
         config_content += "</model>"
 
-        trimesh.exchange.export.export_mesh(trimesh_data, '/home/dof6/.gazebo/models/'+name+'/meshes/'+name+'.dae', file_type="dae")
-        with open('/home/dof6/.gazebo/models/'+name+'/model.sdf','w') as f:
+        trimesh.exchange.export.export_mesh(trimesh_data, newpath + name+'/meshes/'+name+'.stl', file_type="stl")
+        with open(newpath + name+'/model.sdf','w') as f:
             f.write(sdf_content)
         f.close()
-        with open('/home/dof6/.gazebo/models/'+name+'/model.config','w') as f:
+        with open(newpath + name+'/model.config','w') as f:
             f.write(config_content)
         f.close()
