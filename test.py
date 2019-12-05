@@ -17,7 +17,7 @@ import tf.transformations
 
 import numpy as np
 from myutil import *
-from baxter_pickplace_interface import *
+# from baxter_pickplace_interface import *
 from matplotlib import pyplot as plt
 
 class BinPickingEnv():
